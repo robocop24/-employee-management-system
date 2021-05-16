@@ -1,2 +1,5 @@
 
 pip freeze requirements.txt
+git init
+git add .
+git commit -m "Initial commmit"
