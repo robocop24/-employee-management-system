@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+<div class="container my-3">
+
+  {% if allTodo|length == 0 %}
+
+  <div class="alert alert-dark" role="alert">
+    No Data found. Add your first employee now!
+  </div>
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">SNo</th>
+        <th scope="col">Name</th>
+        <th scope="col">Role</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Manager</th>
+        <th scope="col">Office</th>
+        <th scope="col">Joining Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for values in allTodo %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        {% for value in values %}
+        <td>{{ value }}</td>
+        {% endfor %}
+
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+</div>
+{% endblock %}
