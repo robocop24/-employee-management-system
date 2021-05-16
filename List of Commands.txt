@@ -1,10 +1,14 @@
+heroku login
 
-git clone
-pip
-venv
-
-pip install -r requirements.txt
+pip install gunicorn
+pip freeze requirements.txt
+Procfile
+web:gunicorn app:app
 
 git init
 git add .
 git commit -m "Initial commmit"
+
+heroku create employee-management-system-user
+git remote -v
+git push heroku main
