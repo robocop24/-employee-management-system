@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 
 # schema of app db
-class Todo(db.Model):
+class Employee(db.Model):
 
     sno = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
@@ -18,7 +18,6 @@ class Todo(db.Model):
     manager = db.Column(db.String(500), nullable=False)
     office = db.Column(db.String(500), nullable=False)
     joining_date = db.Column(db.String(500), nullable=False)
-    # date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self) -> str:
         return f"{self.sno} , {self.name}, {self.role}, {self.mobile}, {self.manager}, {self.office}, {self.joining_date}"
@@ -28,7 +27,7 @@ class Todo(db.Model):
 @app.route('/home')
 def home():
     result = []
-    for row in Todo.query.all():
+    for row in Employee.query.all():
         emplyee_data_row = (row.sno, row.name, row.role, row.mobile, row.manager, row.office, row.joining_date)
         result.append(emplyee_data_row)
 
@@ -65,8 +64,7 @@ def home():
         else:
             for tuple in dict_by_date[key]:
                 result.append(tuple)
-
-    print(result)    
+    
     return render_template("home.html", allTodo= result)
 
 # add page
@@ -84,8 +82,8 @@ def insert():
         manager = request.form['inputManager']
         office = request.form['inputOffice']
         jd = request.form['inputJD']
-        todo = Todo(name=name, role=role, mobile=mobile, manager=manager, office=office, joining_date=jd)
-        db.session.add(todo)
+        employee = Employee(name=name, role=role, mobile=mobile, manager=manager, office=office, joining_date=jd)
+        db.session.add(employee)
         db.session.commit()
     return redirect("/")
 
