@@ -50,12 +50,12 @@ def home():
         if num_months in dict_by_date.keys():
             dict_by_date[num_months].append((emplyee_data_row[1], emplyee_data_row[2], emplyee_data_row[3],
             emplyee_data_row[4], emplyee_data_row[5],
-            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
+            join_date[2].strip('0')+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
             emplyee_data_row[0]))
         else:
             dict_by_date[num_months] = [(emplyee_data_row[1], emplyee_data_row[2], emplyee_data_row[3],
             emplyee_data_row[4], emplyee_data_row[5],
-            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
+            join_date[2].strip('0')+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
             emplyee_data_row[0])]
     
     # sorting data by dict keys
