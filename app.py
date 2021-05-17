@@ -50,11 +50,13 @@ def home():
         if num_months in dict_by_date.keys():
             dict_by_date[num_months].append((emplyee_data_row[1], emplyee_data_row[2], emplyee_data_row[3],
             emplyee_data_row[4], emplyee_data_row[5],
-            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)'))
+            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
+            emplyee_data_row[0]))
         else:
             dict_by_date[num_months] = [(emplyee_data_row[1], emplyee_data_row[2], emplyee_data_row[3],
             emplyee_data_row[4], emplyee_data_row[5],
-            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)')]
+            join_date[2]+' '+full_month_name+' '+join_date[0][2:]+' ('+str(num_months)+' months ago)',
+            emplyee_data_row[0])]
     
     # sorting data by dict keys
     result.clear()
@@ -87,6 +89,35 @@ def insert():
         db.session.commit()
     return redirect("/")
 
+@app.route('/update/<int:sno>', methods=['GET', 'POST'])
+def update(sno):
+    if request.method=='POST':
+        name = request.form['inputName']
+        role = request.form['inputRole']
+        mobile = request.form['inputMobile']
+        manager = request.form['inputManager']
+        office = request.form['inputOffice']
+        jd = request.form['inputJD']
+        employee = Employee.query.filter_by(sno=sno).first()
+        employee.name = name
+        employee.role = role
+        employee.mobile = mobile
+        employee.manager = manager
+        employee.office = office
+        employee.joining_date = jd        
+        db.session.add(employee)
+        db.session.commit()
+        return redirect("/")
+
+    employee = Employee.query.filter_by(sno=sno).first()
+    return render_template('update.html', employee=employee)
+
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    employee = Employee.query.filter_by(sno=sno).first()
+    db.session.delete(employee)
+    db.session.commit()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
